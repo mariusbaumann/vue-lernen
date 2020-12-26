@@ -34,7 +34,12 @@
                         class="btn bg-vue2 btn-block"
                         @click="storeEvent(eventTitle, eventColor)"
                     >Eintragen</button>
+                    <button
+                        class="btn btn-danger mt-3"
+                        @click="removeAllEvents()"
+                    >Alle Termine löschen</button>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -72,6 +77,10 @@ export default {
             this.eventTitle = '';
             this.eventColor = 'primary';
             this.error = false;
+        },
+        removeAllEvents: function () {
+            store.removeAllEvents()
+            
         }
     }
 }
