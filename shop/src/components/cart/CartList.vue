@@ -23,7 +23,7 @@
 
             
           </tbody>
-            <cartListItem v-for="cartItem in cartItems" :key="cartItem.id" :cartItem="cartItem" />
+            <cartListItem v-for="cartItem in cartListItems" :key="cartItem.id" :cartItem="cartItem" />
         </table>
 
         <hr>
@@ -34,17 +34,17 @@
         <div class="p-4">
           <ul class="list-unstyled mb-4">
             <li class="d-flex justify-content-between pb-3">
-              <strong class="text-muted">Zwischensumme </strong><strong>390,00 €</strong>
+              <strong class="text-muted">Zwischensumme </strong><strong>{{ cartTotalWithoutTaxes }} €</strong>
             </li>
             <li class="d-flex justify-content-between py-3">
-              <strong class="text-muted">MwSt.</strong><strong>74,10 €</strong>
+              <strong class="text-muted">MwSt.</strong><strong>{{ cartTaxes }} €</strong>
             </li>
             <li class="d-flex justify-content-between py-3">
-              <strong class="text-muted">Versandkosten</strong><strong>0,00 €</strong>
+              <strong class="text-muted">Versandkosten</strong><strong>{{ cartShipping }} €</strong>
             </li>
             <li class="d-flex justify-content-between py-3">
               <strong class="text-muted">Gesamtkosten</strong>
-              <h5 class="font-weight-bold">464,10 €</h5>
+              <h5 class="font-weight-bold">{{cartTotalWithShipping }} €</h5>
             </li>
           </ul>
           <button
@@ -56,7 +56,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import cartListItem from './cartListItem'; 
+
 
 
 export default {
@@ -65,10 +67,22 @@ export default {
         cartListItem,
     },
     computed: {
-        cartItems() {
-            return this.$store.getters.cartListItems;
+        ...mapGetters([
+            'cartListItems',
+            'cartTotal'
+        ]),
+        cartTotalWithoutTaxes() {
+            return parseFloat(this.cartTotal - this.cartTaxes).toFixed(2);
+        },
+        cartTaxes() {
+            return (this.cartTotal * 0.19).toFixed(2);
+        },
+        cartShipping() {
+            return 9.99;
+        },
+        cartTotalWithShipping() {
+            return (parseFloat(this.cartTotal) + parseFloat(this.cartShipping)).toFixed(2);
         }
-        
     },
 
     created() {
