@@ -21,38 +21,9 @@
           </thead>
           <tbody>
 
-            <tr
-              v-for="i in 3"
-              :key="i"
-            >
-              <th>
-                <div class="p-2">
-                  <img 
-                    src="https://picsum.photos/70" 
-                    width="70" 
-                    class="img-fluid rounded shadow-sm"
-                  >
-                  <div class="ml-3 d-inline-block align-middle">
-                    <h5 class="mb-0">
-                      <div class="text-dark d-inline-block align-middle">Produktname</div>
-                    </h5>
-                    <span class="text-muted font-weight-normal font-italic">Kategorie: Uhren</span>
-                  </div>
-                </div>
-              </th>
-              <td class="align-middle">
-                <strong>79,00 €</strong>
-              </td>
-              <td class="align-middle">
-                <strong>3</strong>
-              </td>
-              <td class="align-middle">
-                <i class="fa fa-trash"></i>
-              </td>
-            </tr>
-
+            
           </tbody>
-
+            <cartListItem v-for="cartItem in cartItems" :key="cartItem.id" :cartItem="cartItem" />
         </table>
 
         <hr>
@@ -85,8 +56,24 @@
 </template>
 
 <script>
+import cartListItem from './cartListItem'; 
+
+
 export default {
-    name: "CartList"
+    name: "CartList",
+    components: {
+        cartListItem,
+    },
+    computed: {
+        cartItems() {
+            return this.$store.getters.cartListItems;
+        }
+        
+    },
+
+    created() {
+        this.$store.dispatch('getCartItems');
+    }
 }
 </script>
 

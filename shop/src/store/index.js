@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 //Module import
 import cart from "./modules/cart";
-import product from "./modules/cart";
+import product from "./modules/product";
 
 Vue.use(Vuex)
 

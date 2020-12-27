@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { get } from 'core-js/fn/dict';
+//import { get } from 'core-js/fn/dict';
 
 const state = {
     productItems: []
@@ -16,7 +16,7 @@ const actions = {
     getProductItems({commit}) {
         axios.get('api/products')
             .then((Response) => {
-                commit('UPDATE_PRODUCT_ITEMS', Response.data)
+                commit('UPDATE_PRODUCT_ITEMS', Response.data);
             })
     }
     
