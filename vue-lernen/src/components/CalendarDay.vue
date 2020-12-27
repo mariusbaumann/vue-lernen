@@ -7,8 +7,8 @@
         >
             <strong>{{ day.fullName }}</strong>
         </div>
-        <div class="card-body">
-            <div>{{ day.id }}</div>
+        <div class="card-body" :class="getActiveDay">
+            <div>{{ day.id }} </div>
 
             <CalendarEvent 
                 v-for="(event, index) in day.events"
@@ -30,6 +30,14 @@ export default {
     props: ['day'],
     components: {
         CalendarEvent
+    },
+    computed: {
+        getActiveDay() {
+            if (this.day.active) {
+                return "alert-primary" ;
+            } else { return "" }
+        }
+
     },
     methods: {
         setActiveDay(dayId) {
