@@ -1,7 +1,14 @@
 <template>
 <div>
-     <h3 class="text-uppercase">Warenkorb</h3>
-
+     <h3 class="text-uppercase">Warenkorb
+         <span v-if="cartQuantity > 0">
+             ({{ cartQuantity }} Artikel)
+             <i class="fas fa-trash"
+                 @click="removeAllCartItems">
+             </i>
+         </span>
+     </h3>
+    <div v-if="cartQuantity > 0">
         <table class="table table-borderless">
           <thead>
             <tr>
@@ -23,7 +30,7 @@
 
             
           </tbody>
-            <cartListItem v-for="cartItem in cartListItems" :key="cartItem.id" :cartItem="cartItem" />
+            <cartListItem v-for="cartItem in cartItems" :key="cartItem.id" :cartItem="cartItem" />
         </table>
 
         <hr>
@@ -52,11 +59,13 @@
           >Zur Kasse</button>
         </div>
       </div>
+</div>
     
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import cartListItem from './cartListItem'; 
 
 
@@ -68,8 +77,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'cartListItems',
-            'cartTotal'
+            'cartItems',
+            'cartTotal',
+            'cartQuantity'
         ]),
         cartTotalWithoutTaxes() {
             return parseFloat(this.cartTotal - this.cartTaxes).toFixed(2);
@@ -84,9 +94,12 @@ export default {
             return (parseFloat(this.cartTotal) + parseFloat(this.cartShipping)).toFixed(2);
         }
     },
-
-    created() {
-        this.$store.dispatch('getCartItems');
+    
+    methods: {
+        ...mapActions([
+            'removeAllCartItems'
+        ]
+        )
     }
 }
 </script>

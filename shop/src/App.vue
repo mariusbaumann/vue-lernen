@@ -1,29 +1,29 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-4 p-5">
-        <CartList />
+      <div class="col-12">
+        <Navbar />
+        <router-view></router-view>
       </div>
-
-       <div class="col-8 p-5">
-         <ProductList />
-       </div>
-
-      
     </div>
+   
     
   </div>
 </template>
 
 <script>
-import CartList from "./components/cart/CartList";
-import ProductList from "./components/product/ProductList";
+import Navbar from "./components/navbar";
+
 
   export default {
     name: 'App',
     components: {
-      CartList,
-      ProductList,
+      Navbar,
+ 
+      },
+      created() {
+        this.$store.dispatch('getCartItems');
+        this.$store.dispatch('getProductItems');
       }
   }
 </script>

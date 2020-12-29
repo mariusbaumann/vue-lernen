@@ -21,6 +21,8 @@
               </td>
               <td class="align-middle">
                 <strong>{{ cartItem.quantity }}</strong>
+                <i class="fas fa-plus-circle m-3" @click="addCartItem(cartItem)"></i>
+                <i class="fas fa-minus-circle" @click="removeCartItem(cartItem)"></i>
               </td>
               <td class="align-middle">
                 <i class="fa fa-trash"></i>
@@ -31,9 +33,18 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: 'CartListItem', 
-    props: ['cartItem']
+    props: ['cartItem'],
+    methods: {
+        ...mapActions([
+            'addCartItem',
+            'removeCartItem'
+        ]
+        )
+    }
     
 }
 </script>
